@@ -13,4 +13,5 @@ public class BoardVO {
     public String updateDate;
     
     List<String> bnos;
+    
 }

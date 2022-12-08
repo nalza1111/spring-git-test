@@ -8,7 +8,13 @@
 				title LIKE '%' || #{title} || '%'
 			</if>
 			<if test="writer != null">
-				writer LIKE '%' || #{writer} || '%'
+				AND writer LIKE '%' || #{writer} || '%'
+			</if>
+			<if test="bnos != null">
+				AND BNO IN
+					<foreach collection="bnos" item="b" open="(" close=")" separator=",">
+						#{b}
+					</foreach>
 			</if>
 		</where>
 	</sql>

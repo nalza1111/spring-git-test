@@ -1,5 +1,9 @@
 package com.micol.web;
 
+import java.io.Console;
+import java.util.Arrays;
+
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,13 @@ import com.micol.web.board.BoardVO;
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class BoardMapperClient {
 	@Autowired BoardMapper mapper;
+	@Autowired SqlSession mybatis;
+	
+	@Test
+	public void mybatisTest() {
+		System.out.println(mybatis.selectList("com.micol.web.board.BoardMapper.getBoardAll"));
+	}
+	
 	//@Test
 	public void getBoard() {
 		BoardVO vo = mapper.getBoard("1");
@@ -49,10 +60,22 @@ public class BoardMapperClient {
 		vo.setTitle("c");
 		mapper.getBoardAll(vo).forEach(board -> System.out.println(vo));
 	}
-	@Test
+	//@Test
+	public void getBoardAll2() {
+		BoardVO vo = new BoardVO();
+		vo.setBnos(Arrays.asList("21","22","23"));
+		//vo.setWriter("Writer");
+		//System.out.println(Arrays.asList("21","22","23"));
+		mapper.getBoardAll(vo).forEach(board -> System.out.println(board.get("bno")));
+	}
+	//@Test
 	public void count() {
 		BoardVO vo = new BoardVO();
 		vo.setTitle("t");
 		System.out.println(mapper.count(vo));
+	}
+	//@Test
+	public void selectBoard() {
+		mapper.selectBoard().forEach(board -> System.out.println(board));
 	}
 }
